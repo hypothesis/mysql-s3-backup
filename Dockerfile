@@ -2,7 +2,7 @@ FROM mysql:5.7
 MAINTAINER Hypothes.is Project and contributors
 
 RUN apt-get update && \
-    apt install -y --no-install-recommends python python-pip && \
+    apt install -y --no-install-recommends python python-pip curl && \
     pip install -U pip awscli && \
     rm -rf /var/lib/apt/lists/*
 
