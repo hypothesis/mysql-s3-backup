@@ -52,7 +52,14 @@ check_s3_url() {
 }
 
 dump() {
-    if ! $(mysqldump --host "$MYSQL_HOST" --user "$MYSQL_USER" --password="$MYSQL_PASSWORD" "$MYSQL_DB" | gzip -9 > $localpath); then
+    cat >"$HOME/.my.cnf" <<EOM
+[mysqldump]
+host=$MYSQL_HOST
+user=$MYSQL_USER
+password=$MYSQL_PASSWORD
+EOM
+
+    if ! $(mysqldump "$MYSQL_DB" | gzip -9 > $localpath); then
         abort "couldn't dump database"
     fi
 }
